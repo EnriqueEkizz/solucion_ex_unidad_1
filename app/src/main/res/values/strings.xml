@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Gestión Noticias</string>
+
+    <string name="str_cat_inicial">Ultimas noticias</string>
+
+    <string name="str_cat_economia">ECONOMÍA</string>
+    <string name="str_cat_economia_a">Mercados</string>
+    <string name="str_cat_economia_b">Empresas</string>
+    <string name="str_cat_economia_c">Managment y Empleo</string>
+
+    <string name="str_cat_mundo">MUNDO</string>
+    <string name="str_cat_mundo_a">EE.UU</string>
+    <string name="str_cat_mundo_b">México</string>
+    <string name="str_cat_mundo_c">España</string>
+    <string name="str_cat_mundo_d">Internacional</string>
+
+    <string name="str_cat_peru">PERÚ</string>
+    <string name="str_cat_peru_a">Política</string>
+
+    <string name="str_cat_tudinero">TU DINERO</string>
+    <string name="str_cat_tudinero_a">Finanzas personales</string>
+    <string name="str_cat_tudinero_b">Inmobiliaria</string>
+
+    <string name="str_cat_tecnologia">TECNOLOGÍA</string>
+</resources>

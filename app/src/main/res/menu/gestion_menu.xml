@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/cat_economia"
+        android:title="@string/str_cat_economia"
+        app:showAsAction="never">
+        <menu>
+            <item android:id="@+id/cat_economia_a"
+                android:title="@string/str_cat_economia_a"
+                app:showAsAction="never"/>
+            <item android:id="@+id/cat_economia_b"
+                android:title="@string/str_cat_economia_b"
+                app:showAsAction="never"/>
+            <item android:id="@+id/cat_economia_c"
+                android:title="@string/str_cat_economia_c"
+                app:showAsAction="never"/>
+        </menu>
+    </item>
+    <item android:id="@+id/cat_mundo"
+        android:title="@string/str_cat_mundo"
+        app:showAsAction="never">
+        <menu>
+            <item android:id="@+id/cat_mundo_a"
+                android:title="@string/str_cat_mundo_a"
+                app:showAsAction="never"/>
+            <item android:id="@+id/cat_mundo_b"
+                android:title="@string/str_cat_mundo_b"
+                app:showAsAction="never"/>
+            <item android:id="@+id/cat_mundo_c"
+                android:title="@string/str_cat_mundo_c"
+                app:showAsAction="never"/>
+            <item android:id="@+id/cat_mundo_d"
+                android:title="@string/str_cat_mundo_d"
+                app:showAsAction="never"/>
+
+        </menu>
+    </item>
+    <item android:id="@+id/cat_peru"
+        android:title="@string/str_cat_peru"
+        app:showAsAction="never">
+        <menu>
+            <item android:id="@+id/cat_peru_a"
+                android:title="@string/str_cat_peru_a"/>
+        </menu>
+    </item>
+    <item android:id="@+id/cat_tudinero"
+        android:title="@string/str_cat_tudinero"
+        app:showAsAction="never">
+        <menu>
+            <item android:id="@+id/cat_tudinero_a"
+                android:title="@string/str_cat_tudinero_a"
+                app:showAsAction="never"/>
+            <item android:id="@+id/cat_tudinero_b"
+                android:title="@string/str_cat_tudinero_b"
+                app:showAsAction="never"/>
+        </menu>
+    </item>
+    <item android:id="@+id/cat_tecnologia"
+        android:title="@string/str_cat_tecnologia"
+        app:showAsAction="never"/>
+</menu>
