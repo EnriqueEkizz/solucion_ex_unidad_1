@@ -7,4 +7,5 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBackgroundActivity">#EBEBEB</color>
     <color name="colorBlackFont">#333333</color>
+    <color name="colorBlack">#000000</color>
 </resources>
