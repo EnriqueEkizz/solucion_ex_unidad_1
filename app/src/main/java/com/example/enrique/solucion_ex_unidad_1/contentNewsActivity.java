@@ -1,8 +1,13 @@
 package com.example.enrique.solucion_ex_unidad_1;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -15,21 +20,47 @@ import java.util.List;
 
 public class contentNewsActivity extends AppCompatActivity {
 
+    Bundle bundle;
+    TextView tvTitle;
+    TextView tvSummary;
+    TextView tvDate;
+    ViewPager viewPager;
+    contentNewsSliderImage contentNewsSliderImage;
+    Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_content_news);
+
+        tvTitle = (TextView)findViewById(R.id.tvTitleContentNews);
+        tvSummary = (TextView)findViewById(R.id.tvSummaryContentNews);
+        tvDate = (TextView)findViewById(R.id.tvDateContentNews);
+        viewPager = (ViewPager)findViewById(R.id.vpImagesContentNews);
+
+        context = this;
+        Intent intent = getIntent();
+        bundle = intent.getExtras();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        new clsExtractNewsContent(bundle.getString("link"),bundle.getByte("tipoMedia"));
     }
 
     /////////////////////////////////////////////////////////////////////////////// CLASE EXTRAER LISTA NOTICIAS
-    public class clsExtractNewsList extends AsyncTask<Void, Void, Void> {
+    public class clsExtractNewsContent extends AsyncTask<Void, Void, Void> {
         private String url;
+        private byte tipoMedia;
         public Elements newslist;
         private Document doc;
         private String tagclassnew_gestion = "article.news-detail.gestion.default";
 
-        public clsExtractNewsList(String xUrl) {
+        public clsExtractNewsContent(String xUrl, byte xTipoMedia) {
             this.url = xUrl;
+            this.tipoMedia = xTipoMedia;
         }
 
         @Override
@@ -46,21 +77,45 @@ public class contentNewsActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             String titulo, summary, hora, contenido;
+            List<String> linksImage = new ArrayList<>();
+            List<String> descriptionImage = new ArrayList<>();
+
+            byte tipoMedia;
+
             List<String> imagesUrl;
 
-            //Obteniendo detalle de noticias (Hora)
-            for (Element element : this.newslist) {
-                titulo = element.select("div.sf.elemento.generico").select("h1").text();
-                summary = element.select("div.sf.elemento.generico").select("h2").select("a").text();
-                hora = element.select("div.news-column").select("div.news-author-date ").select("time").select("span").text();
+            //Obteniendo detalle de noticias
+            Element element = this.newslist.first();
 
-                //urlimagen = element.select("figure.flow-image").select("img").attr("data-src");
+            titulo = element.select("div.sf.elemento.generico").select("h1").text();
+            summary = element.select("div.sf.elemento.generico").select("h2").select("a").text();
+            hora = element.select("div.news-column").select("div.news-author-date ").select("time").select("span").text();
 
-                //item.add(new modelItemnewslist(hora, titulo, urlimagen));
+            //Verificar si foto es solo foto, carrusel foto o video
+            switch (this.tipoMedia) {
+                case 0: // No carrusel
+                    linksImage.add(element.select("div.image-pri").select("img").attr("src"));
+                    descriptionImage.add(element.select("figcaption").select("p").text());
+                    break;
+                case 1: // Si carrusel
+                    Elements gallery = element.select("div.article-media.content-gallery-ads").select("div.slider-pane").select("div.slide");
+                    int gallerysize = gallery.size();
+
+                    gallerysize--;
+                    for (int i = 1; i < gallerysize; i++) {
+                        linksImage.add(gallery.get(i).select("img").attr("src"));
+                        descriptionImage.add(gallery.get(i).select("p").text());
+                    }
+                    break;
+                default: // Video
+
             }
+            tvTitle.setText(titulo);
+            tvSummary.setText(summary);
+            tvDate.setText(hora);
 
-            //adaptadorItemsNewsList = new rvNewslistAdaptador(item);
-            //recyclerViewItemsNewsList.setAdapter(adaptadorItemsNewsList);
+            contentNewsSliderImage = new contentNewsSliderImage(context, linksImage, descriptionImage);
+            viewPager.setAdapter(contentNewsSliderImage);
         }
     }
 }

@@ -5,15 +5,17 @@ public class modelItemnewslist {
     private String titulo;
     private String urlImagen;
     private String link;
+    private byte carruselImage;
 
     public modelItemnewslist() {
     }
 
-    public modelItemnewslist(String hora, String titulo, String urlImagen, String link) {
+    public modelItemnewslist(String hora, String titulo, String urlImagen, String link, byte carruselImage) {
         this.hora = hora;
         this.titulo = titulo;
         this.urlImagen = urlImagen;
         this.link = link;
+        this.carruselImage = carruselImage;
     }
 
     public String getHora() {
@@ -43,4 +45,8 @@ public class modelItemnewslist {
     public String getLink() { return link; }
 
     public void setLink(String link) { this.link = link; }
+
+    public byte isCarruselImage() { return carruselImage; }
+
+    public void setCarruselImage(byte carruselImage) { this.carruselImage = carruselImage; }
 }

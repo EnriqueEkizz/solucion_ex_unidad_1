@@ -143,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             String hora, titulo, urlimagen, link;
+            byte carrusel, tipoMedia = 0;
             List<modelItemnewslist> item = new ArrayList<>();
 
             //Obteniendo detalle de noticias (Hora)
@@ -152,7 +153,16 @@ public class MainActivity extends AppCompatActivity {
                 urlimagen = element.select("figure.flow-image").select("img").attr("data-src");
                 link = element.select("div.flow-detail").select("a.page-link").attr("href");
 
-                item.add(new modelItemnewslist(hora, titulo, urlimagen, link));
+                carrusel = (byte)element.select("figure.flow-image").select("i.icon-photos").size();
+                if (carrusel > 0) {
+                    tipoMedia = 1; // Es carrusel de imagenes
+                } else {
+                    carrusel = (byte)element.select("figure.flow-image").select("i.icon-video").size();
+                    if (carrusel > 0) {
+                        tipoMedia = 2; // Es video
+                    }
+                }
+                item.add(new modelItemnewslist(hora, titulo, urlimagen, link, tipoMedia));
             }
 
             adaptadorItemsNewsList = new rvNewslistAdaptador(item);
