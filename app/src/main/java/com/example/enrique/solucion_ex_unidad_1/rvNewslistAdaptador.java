@@ -42,10 +42,19 @@ public class rvNewslistAdaptador extends RecyclerView.Adapter<rvNewslistAdaptado
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
         viewHolder.hora.setText(itemsNewsList.get(i).getHora());
         viewHolder.titulo.setText(itemsNewsList.get(i).getTitulo());
         Picasso.get().load(itemsNewsList.get(i).getImagen()).into(viewHolder.imageView);
+
+        //Click
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                String newsLink = itemsNewsList.get(i).getLink();
+            }
+        });
     }
 
     private void loadImagenFromUrl(String imagen) {
