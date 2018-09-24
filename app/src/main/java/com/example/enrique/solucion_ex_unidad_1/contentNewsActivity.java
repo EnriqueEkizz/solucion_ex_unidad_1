@@ -1,12 +1,11 @@
 package com.example.enrique.solucion_ex_unidad_1;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.jsoup.Jsoup;
@@ -24,7 +23,8 @@ public class contentNewsActivity extends AppCompatActivity {
     TextView tvTitle;
     TextView tvSummary;
     TextView tvDate;
-    ViewPager viewPager;
+    TextView tvContent;
+    WrapContentHeightViewPager  viewPager;
     contentNewsSliderImage contentNewsSliderImage;
     Context context;
 
@@ -36,18 +36,16 @@ public class contentNewsActivity extends AppCompatActivity {
         tvTitle = (TextView)findViewById(R.id.tvTitleContentNews);
         tvSummary = (TextView)findViewById(R.id.tvSummaryContentNews);
         tvDate = (TextView)findViewById(R.id.tvDateContentNews);
-        viewPager = (ViewPager)findViewById(R.id.vpImagesContentNews);
+
+        viewPager = (WrapContentHeightViewPager)findViewById(R.id.vpImagesContentNews);
+        tvContent = (TextView)findViewById(R.id.tvContentContentNews);
 
         context = this;
+
         Intent intent = getIntent();
         bundle = intent.getExtras();
-    }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        new clsExtractNewsContent(bundle.getString("link"),bundle.getByte("tipoMedia"));
+        new clsExtractNewsContent(bundle.getString("link"),bundle.getByte("tipoMedia")).execute();
     }
 
     /////////////////////////////////////////////////////////////////////////////// CLASE EXTRAER LISTA NOTICIAS
@@ -76,7 +74,7 @@ public class contentNewsActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            String titulo, summary, hora, contenido;
+            String titulo, summary, hora, contenido = "";
             List<String> linksImage = new ArrayList<>();
             List<String> descriptionImage = new ArrayList<>();
 
@@ -88,13 +86,13 @@ public class contentNewsActivity extends AppCompatActivity {
             Element element = this.newslist.first();
 
             titulo = element.select("div.sf.elemento.generico").select("h1").text();
-            summary = element.select("div.sf.elemento.generico").select("h2").select("a").text();
-            hora = element.select("div.news-column").select("div.news-author-date ").select("time").select("span").text();
+            summary = element.select("div.sf.elemento.generico").select("h2").text();
+            hora = element.select("div.news-column").select("div.news-author-date").select("time").select("span").text();
 
             //Verificar si foto es solo foto, carrusel foto o video
             switch (this.tipoMedia) {
                 case 0: // No carrusel
-                    linksImage.add(element.select("div.image-pri").select("img").attr("src"));
+                    linksImage.add(element.select("div.image_pri").select("img").attr("src"));
                     descriptionImage.add(element.select("figcaption").select("p").text());
                     break;
                 case 1: // Si carrusel
@@ -110,12 +108,20 @@ public class contentNewsActivity extends AppCompatActivity {
                 default: // Video
 
             }
+
+            Elements content = element.select("div.news-text-content").select("p");
+            for (Element e : content) {
+                contenido = contenido + "\n\n" +  e.text();
+            }
+
             tvTitle.setText(titulo);
             tvSummary.setText(summary);
             tvDate.setText(hora);
+            tvContent.setText(contenido);
 
             contentNewsSliderImage = new contentNewsSliderImage(context, linksImage, descriptionImage);
             viewPager.setAdapter(contentNewsSliderImage);
+            viewPager.measure(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         }
     }
 }

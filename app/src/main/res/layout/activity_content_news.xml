@@ -4,29 +4,51 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".contentNewsActivity">
 
-    <TextView
-        android:id="@+id/tvTitleContentNews"
+    <ScrollView
+        android:id="@+id/nsvContenedor"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/tvSummaryContentNews"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/tvDateContentNews"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <android.support.v4.view.ViewPager
-        android:id="@+id/vpImagesContentNews"
-        android:layout_width="match_parent"
-        android:layout_height="300dp">
-    </android.support.v4.view.ViewPager>
-    <TextView
-        android:id="@+id/tvContentContentNews"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tvTitleContentNews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorBlack"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:padding="5dp"/>
+            <TextView
+                android:id="@+id/tvSummaryContentNews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorBlackFont"
+                android:paddingVertical="0dp"
+                android:paddingHorizontal="5dp"/>
+            <TextView
+                android:id="@+id/tvDateContentNews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:textSize="12dp" />
 
+            <com.example.enrique.solucion_ex_unidad_1.WrapContentHeightViewPager
+                android:id="@+id/vpImagesContentNews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorBlack">
+            </com.example.enrique.solucion_ex_unidad_1.WrapContentHeightViewPager>
+            <TextView
+                android:id="@+id/tvContentContentNews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorBlackFont"
+                android:paddingHorizontal="5dp" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

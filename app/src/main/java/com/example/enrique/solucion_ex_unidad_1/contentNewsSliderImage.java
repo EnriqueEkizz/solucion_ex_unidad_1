@@ -43,15 +43,20 @@ public class contentNewsSliderImage extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = layoutInflater.inflate(R.layout.swipe_imagenews,container, false);
+        View view = layoutInflater.inflate(R.layout.swipe_imagenews, container, false);
+
 
         ImageView imageView = (ImageView)view.findViewById(R.id.ivImageNews);
+
         TextView tvCountImage = (TextView)view.findViewById(R.id.tvImageCount);
         TextView tvTotalImage = (TextView)view.findViewById(R.id.tvImageTotalCount);
+        TextView tvImageDescription = (TextView)view.findViewById(R.id.tvImageDescription);
 
+        tvCountImage.setText(String.valueOf(position + 1));
+        tvTotalImage.setText(String.valueOf(linksImage.size()));
+
+        tvImageDescription.setText(descriptionImage.get(position));
         Picasso.get().load(linksImage.get(position)).into(imageView);
-        tvCountImage.setText(position);
-        tvTotalImage.setText(linksImage.size());
 
         container.addView(view);
 

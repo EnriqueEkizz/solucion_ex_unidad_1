@@ -46,7 +46,7 @@ public class modelItemnewslist {
 
     public void setLink(String link) { this.link = link; }
 
-    public byte isCarruselImage() { return carruselImage; }
+    public byte getCarruselImage() { return carruselImage; }
 
     public void setCarruselImage(byte carruselImage) { this.carruselImage = carruselImage; }
 }

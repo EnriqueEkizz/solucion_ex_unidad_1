@@ -1,6 +1,8 @@
 package com.example.enrique.solucion_ex_unidad_1;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,6 +17,8 @@ import java.util.List;
 
 public class rvNewslistAdaptador extends RecyclerView.Adapter<rvNewslistAdaptador.ViewHolder> {
 
+    Context context;
+
     public static class ViewHolder extends RecyclerView.ViewHolder{
         private TextView hora, titulo, imagen;
         private ImageView imageView;
@@ -23,14 +27,15 @@ public class rvNewslistAdaptador extends RecyclerView.Adapter<rvNewslistAdaptado
             super(itemView);
             hora = (TextView)itemView.findViewById(R.id.tvHourNewsList);
             titulo = (TextView)itemView.findViewById(R.id.tvTitleNewsList);
-            imageView = (ImageView)itemView.findViewById(R.id.imgPhotoNewsList);
+            imageView = itemView.findViewById(R.id.imgPhotoNewsList);
         }
     }
 
     public List<modelItemnewslist> itemsNewsList;
 
-    public rvNewslistAdaptador(List<modelItemnewslist> itemsNewsList) {
+    public rvNewslistAdaptador(List<modelItemnewslist> itemsNewsList, Context context) {
         this.itemsNewsList = itemsNewsList;
+        this.context = context;
     }
 
     @NonNull
@@ -53,6 +58,16 @@ public class rvNewslistAdaptador extends RecyclerView.Adapter<rvNewslistAdaptado
             @Override
             public void onClick(View v) {
                 String newsLink = itemsNewsList.get(i).getLink();
+
+                Intent intent = new Intent(context, contentNewsActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                Bundle bundle = new Bundle();
+                bundle.putString("link", "https://gestion.pe/" + newsLink);
+                bundle.putByte("tipoMedia", itemsNewsList.get(i).getCarruselImage());
+
+                intent.putExtras(bundle);
+                context.startActivity(intent);
             }
         });
     }

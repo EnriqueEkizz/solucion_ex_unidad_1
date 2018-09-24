@@ -1,14 +1,10 @@
 package com.example.enrique.solucion_ex_unidad_1;
 
 import android.os.AsyncTask;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerViewAccessibilityDelegate;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -43,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
 
         //new clsExtractNewsList("https://gestion.pe/archivo").execute();
-        new clsExtractNewsList("https://gestion.pe/archivo/todas/2018-09-21").execute();
+        new clsExtractNewsList("https://gestion.pe/archivo/todas/2018-09-23").execute();
     }
 
     // Inflar menú
@@ -165,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
                 item.add(new modelItemnewslist(hora, titulo, urlimagen, link, tipoMedia));
             }
 
-            adaptadorItemsNewsList = new rvNewslistAdaptador(item);
+            adaptadorItemsNewsList = new rvNewslistAdaptador(item, getApplicationContext());
             recyclerViewItemsNewsList.setAdapter(adaptadorItemsNewsList);
         }
     }
