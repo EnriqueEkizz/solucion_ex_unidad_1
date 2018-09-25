@@ -36,9 +36,8 @@
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:textSize="12dp" />
-
             <com.example.enrique.solucion_ex_unidad_1.WrapContentHeightViewPager
-                android:id="@+id/vpImagesContentNews"
+                android:id="@+id/vpMediaContentNews"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorBlack">
@@ -48,7 +47,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorBlackFont"
-                android:paddingHorizontal="5dp" />
+                android:paddingHorizontal="5dp"
+                android:paddingBottom="5dp"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

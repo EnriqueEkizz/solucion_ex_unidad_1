@@ -58,4 +58,7 @@
     <item android:id="@+id/cat_tecnologia"
         android:title="@string/str_cat_tecnologia"
         app:showAsAction="never"/>
+    <item android:id="@+id/cat_ultimasnoticias"
+        android:title="@string/str_cat_inicial"
+        app:showAsAction="never"/>
 </menu>

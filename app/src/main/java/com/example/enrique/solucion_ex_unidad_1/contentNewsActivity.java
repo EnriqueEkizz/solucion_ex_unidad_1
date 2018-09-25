@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -37,7 +38,7 @@ public class contentNewsActivity extends AppCompatActivity {
         tvSummary = (TextView)findViewById(R.id.tvSummaryContentNews);
         tvDate = (TextView)findViewById(R.id.tvDateContentNews);
 
-        viewPager = (WrapContentHeightViewPager)findViewById(R.id.vpImagesContentNews);
+        viewPager = (WrapContentHeightViewPager)findViewById(R.id.vpMediaContentNews);
         tvContent = (TextView)findViewById(R.id.tvContentContentNews);
 
         context = this;
@@ -77,9 +78,6 @@ public class contentNewsActivity extends AppCompatActivity {
             String titulo, summary, hora, contenido = "";
             List<String> linksImage = new ArrayList<>();
             List<String> descriptionImage = new ArrayList<>();
-
-            byte tipoMedia;
-
             List<String> imagesUrl;
 
             //Obteniendo detalle de noticias
@@ -106,7 +104,8 @@ public class contentNewsActivity extends AppCompatActivity {
                     }
                     break;
                 default: // Video
-
+                    linksImage.add(element.select("div.video-module-image").select("img").attr("src"));
+                    descriptionImage.add(element.select("div.video-module-details").select("p").text());
             }
 
             Elements content = element.select("div.news-text-content").select("p");

@@ -23,25 +23,31 @@ public class MainActivity extends AppCompatActivity {
     TextView tv_categoria;
     private RecyclerView recyclerViewItemsNewsList;
     private rvNewslistAdaptador adaptadorItemsNewsList;
+    private String newsPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         recyclerViewItemsNewsList = (RecyclerView)findViewById(R.id.rvNewsList);
         recyclerViewItemsNewsList.setLayoutManager(new LinearLayoutManager(this));
+
+        this.newsPath = "https://gestion.pe/archivo";
+
+        startXtractNews();
     }
 
-    @Override
+    /*@Override
     protected void onStart() {
         super.onStart();
 
-        //new clsExtractNewsList("https://gestion.pe/archivo").execute();
-        new clsExtractNewsList("https://gestion.pe/archivo/todas/2018-09-23").execute();
-    }
 
+    }*/
+
+    public void startXtractNews() {
+        new clsExtractNewsList(newsPath).execute();
+    }
     // Inflar menú
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -61,38 +67,54 @@ public class MainActivity extends AppCompatActivity {
             case R.id.cat_economia_a:
                 //Actualizar textview categoria elegida
                 tv_categoria.setText(R.string.str_cat_economia_a);
+                this.newsPath="https://gestion.pe/economia/mercados";
+                startXtractNews();
                 return true;
             case R.id.cat_economia_b:
                 //Actualizar textview categoria elegida
                 tv_categoria.setText(R.string.str_cat_economia_b);
+                this.newsPath="https://gestion.pe/economia/empresas";
+                startXtractNews();
                 return true;
             case R.id.cat_economia_c:
                 //Actualizar textview categoria elegida
                 tv_categoria.setText(R.string.str_cat_economia_c);
+                this.newsPath="https://gestion.pe/economia/management-empleo";
+                startXtractNews();
                 return true;
             case R.id.cat_mundo://///////////////////////////////////// <-------------------
                 //Actualizar textview categoria elegida
                 return true;
             case R.id.cat_mundo_a:
                 //Actualizar textview categoria elegida
+                this.newsPath="https://gestion.pe/mundo/eeuu";
+                startXtractNews();
                 tv_categoria.setText(R.string.str_cat_mundo_a);
                 return true;
             case R.id.cat_mundo_b:
                 //Actualizar textview categoria elegida
+                this.newsPath="https://gestion.pe/mundo/mexico";
+                startXtractNews();
                 tv_categoria.setText(R.string.str_cat_mundo_b);
                 return true;
             case R.id.cat_mundo_c:
                 //Actualizar textview categoria elegida
+                this.newsPath="https://gestion.pe/mundo/espana";
+                startXtractNews();
                 tv_categoria.setText(R.string.str_cat_mundo_c);
                 return true;
             case R.id.cat_mundo_d:
                 //Actualizar textview categoria elegida
+                this.newsPath="https://gestion.pe/mundo/internacional";
+                startXtractNews();
                 tv_categoria.setText(R.string.str_cat_mundo_d);
                 return true;
             case R.id.cat_peru://///////////////////////////////////// <-------------------
                 return true;
             case R.id.cat_peru_a:
                 //Actualizar textview categoria elegida
+                this.newsPath="https://gestion.pe/peru/politica";
+                startXtractNews();
                 tv_categoria.setText(R.string.str_cat_peru_a);
                 return true;
             case R.id.cat_tudinero://///////////////////////////////////// <-------------------
@@ -100,14 +122,26 @@ public class MainActivity extends AppCompatActivity {
             case R.id.cat_tudinero_a:
                 //Actualizar textview categoria elegida
                 tv_categoria.setText(R.string.str_cat_tudinero_a);
+                this.newsPath="https://gestion.pe/tu-dinero/finanzas-personales";
+                startXtractNews();
                 return true;
             case R.id.cat_tudinero_b:
                 //Actualizar textview categoria elegida
+                this.newsPath="https://gestion.pe/tu-dinero/inmobiliarias";
+                startXtractNews();
                 tv_categoria.setText(R.string.str_cat_tudinero_b);
                 return true;
             case R.id.cat_tecnologia://///////////////////////////////////// <-------------------
                 //Actualizar textview categoria elegida
                 tv_categoria.setText(R.string.str_cat_tecnologia);
+                this.newsPath="https://gestion.pe/tecnologia";
+                startXtractNews();
+                return true;
+            case R.id.cat_ultimasnoticias:
+                //Actualizar textview categoria elegida
+                tv_categoria.setText(R.string.str_cat_inicial);
+                this.newsPath="https://gestion.pe/archivo";
+                startXtractNews();
                 return true;
             default:///////////////////////////////////////
                 return super.onOptionsItemSelected(item);
@@ -139,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             String hora, titulo, urlimagen, link;
-            byte carrusel, tipoMedia = 0;
+            byte carrusel, tipoMedia;
             List<modelItemnewslist> item = new ArrayList<>();
 
             //Obteniendo detalle de noticias (Hora)
@@ -150,12 +184,15 @@ public class MainActivity extends AppCompatActivity {
                 link = element.select("div.flow-detail").select("a.page-link").attr("href");
 
                 carrusel = (byte)element.select("figure.flow-image").select("i.icon-photos").size();
-                if (carrusel > 0) {
+
+                if (carrusel == 1) {
                     tipoMedia = 1; // Es carrusel de imagenes
                 } else {
                     carrusel = (byte)element.select("figure.flow-image").select("i.icon-video").size();
-                    if (carrusel > 0) {
+                    if (carrusel == 1) {
                         tipoMedia = 2; // Es video
+                    } else {
+                        tipoMedia = 0; // Es solo imagen
                     }
                 }
                 item.add(new modelItemnewslist(hora, titulo, urlimagen, link, tipoMedia));

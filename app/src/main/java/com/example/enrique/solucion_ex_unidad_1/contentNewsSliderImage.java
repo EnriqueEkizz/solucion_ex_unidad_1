@@ -14,7 +14,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 public class contentNewsSliderImage extends PagerAdapter {
 
@@ -52,10 +51,11 @@ public class contentNewsSliderImage extends PagerAdapter {
         TextView tvTotalImage = (TextView)view.findViewById(R.id.tvImageTotalCount);
         TextView tvImageDescription = (TextView)view.findViewById(R.id.tvImageDescription);
 
+
         tvCountImage.setText(String.valueOf(position + 1));
         tvTotalImage.setText(String.valueOf(linksImage.size()));
-
         tvImageDescription.setText(descriptionImage.get(position));
+
         Picasso.get().load(linksImage.get(position)).into(imageView);
 
         container.addView(view);
@@ -65,7 +65,6 @@ public class contentNewsSliderImage extends PagerAdapter {
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        //super.destroyItem(container, position, object);
         container.removeView((LinearLayout)object);
     }
 }
